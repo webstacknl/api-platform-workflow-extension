@@ -1,0 +1,37 @@
+{
+  "name": "webstack/api-platform-workflow-extension",
+  "license": "MIT",
+  "type": "symfony-bundle",
+  "description": "Opinionated integration of api platform with workflow component",
+  "homepage": "https://github.com/webstacknl/api-platform-workflow-extension",
+  "keywords": [ "workflow", "api-platform" ],
+  "authors": [
+    {
+      "name": "Webstack B.V.",
+      "email": "support@webstack.nl"
+    }
+  ],
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {
+    "php": ">=7.2.0",
+    "api-platform/api-pack": "^1.2",
+    "doctrine/doctrine-bundle": "^1.10",
+    "doctrine/orm": "~2.6.3",
+    "ramsey/uuid-doctrine": "^1.5",
+    "symfony/workflow": "4.3.*",
+    "symfony/validator": "4.3.*",
+    "symfony/framework-bundle": "4.3.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Webstack\\ApiPlatformWorkflowBundle\\": "src/"
+    }
+  },
+  "scripts": {
+    "auto-scripts": {
+      "cache:clear": "symfony-cmd",
+      "assets:install %PUBLIC_DIR%": "symfony-cmd"
+    }
+  }
+}

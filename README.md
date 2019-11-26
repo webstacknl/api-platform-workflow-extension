@@ -1,1 +1,1 @@
-# api-platform-workflow-extension
+# api-platform-workflow-extensions
