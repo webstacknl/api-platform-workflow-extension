@@ -7,13 +7,13 @@ namespace Webstack\ApiPlatformWorkflowBundle\DependencyInjection;
 use Exception;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
- * Class WebstackApiPlatformExtensionsExtension
+ * Class ApiPlatformWorkflowExtension
  */
-class WebstackWorkflowExtension extends Extension
+class WebstackApiPlatformWorkflowExtension extends Extension
 {
     /**
      * @param array $configs
@@ -22,7 +22,7 @@ class WebstackWorkflowExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container): void
     {
-//        $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-//        $loader->load('services.xml');
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader->load('services.yaml');
     }
 }

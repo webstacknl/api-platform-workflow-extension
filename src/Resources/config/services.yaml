@@ -1,0 +1,31 @@
+services:
+  _defaults:
+    autowire: true
+    public: false
+
+  Webstack\ApiPlatformWorkflowBundle\Metadata\WorkflowOperationResourceMetadataFactory:
+    decorates: 'api_platform.metadata.resource.metadata_factory'
+    arguments:
+      - []
+      - '@Webstack\ApiPlatformWorkflowBundle\Metadata\WorkflowOperationResourceMetadataFactory.inner'
+
+  Webstack\ApiPlatformWorkflowBundle\PathResolver\OperationPathResolver:
+    decorates: 'api_platform.operation_path_resolver.generator'
+    arguments:
+      - '@Webstack\ApiPlatformWorkflowBundle\PathResolver\OperationPathResolver.inner'
+
+  Webstack\ApiPlatformWorkflowBundle\EventListener\WorkflowTransitionListener:
+    # ReadListener in api platform is 4
+    # DeserializeListener in api platform is 2
+    tags:
+      - { name: kernel.event_listener, event: kernel.request, priority: 1 }
+
+  Webstack\ApiPlatformWorkflowBundle\EventListener\WorkflowEnabledTransitionsListener:
+    tags:
+      - { name: kernel.event_listener, event: kernel.view, priority: 21 }
+
+  Webstack\ApiPlatformWorkflowBundle\Serializer\ActionsDocumentationNormalizer:
+
+  Webstack\ApiPlatformWorkflowBundle\Transformer\WorflowDtoTransformer:
+    tags:
+      - { name: api_platform.data_transformer }
