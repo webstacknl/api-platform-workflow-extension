@@ -51,9 +51,17 @@ final class WorkflowEnabledTransitionsListener
         }
 
         $class = $request->attributes->get('data');
-        $workflow = $this->workflows->get($class);
+        $workflows = $this->workflows->all($class);
 
-        $event->setResponse(new Response($this->serializer->serialize($workflow->getEnabledTransitions($class),
+        $output = [];
+
+        foreach ($workflows as $workflow) {
+            $workflowName = $workflow->getName();
+
+            $output[$workflowName] = $this->workflows->get($class, $workflowName)->getEnabledTransitions($class);
+        }
+
+        $event->setResponse(new Response($this->serializer->serialize($output,
             'json')));
     }
 }

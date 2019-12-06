@@ -23,9 +23,3 @@ services:
   Webstack\ApiPlatformWorkflowBundle\EventListener\WorkflowEnabledTransitionsListener:
     tags:
       - { name: kernel.event_listener, event: kernel.view, priority: 21 }
-
-  Webstack\ApiPlatformWorkflowBundle\Serializer\ActionsDocumentationNormalizer:
-
-  Webstack\ApiPlatformWorkflowBundle\Transformer\WorflowDtoTransformer:
-    tags:
-      - { name: api_platform.data_transformer }

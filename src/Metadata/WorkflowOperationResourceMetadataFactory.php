@@ -6,6 +6,7 @@ namespace Webstack\ApiPlatformWorkflowBundle\Metadata;
 
 use ApiPlatform\Core\Metadata\Resource\Factory\ResourceMetadataFactoryInterface;
 use ApiPlatform\Core\Metadata\Resource\ResourceMetadata;
+use Webstack\ApiPlatformWorkflowBundle\Model\WorkflowDTO;
 
 /**
  * Class WorkflowOperationResourceMetadataFactory
@@ -43,13 +44,14 @@ final class WorkflowOperationResourceMetadataFactory implements ResourceMetadata
         $operations['state_apply'] = [
             'method' => 'PATCH',
             '_path_suffix' => '/transition',
+            'input' => ['class' => WorkflowDTO::class, 'name' => 'WorkflowDTO'],
             'input_formats' => [
                 'json' => [
                     'application/merge-patch+json',
                 ],
             ],
             'output_formats' => $operations['get']['output_formats'],
-            'normalization_context' => $operations['get']['normalization_context']
+            'normalization_context' => $operations['get']['normalization_context'],
         ];
 
         $operations['state_get'] = [
@@ -57,6 +59,8 @@ final class WorkflowOperationResourceMetadataFactory implements ResourceMetadata
             '_path_suffix' => '/state',
         ];
 
-        return $resourceMetadata->withItemOperations($operations);
+        return $resourceMetadata
+            ->withItemOperations($operations)
+        ;
     }
 }

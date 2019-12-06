@@ -48,7 +48,13 @@ final class WorkflowTransitionListener
         }
 
         $class = $request->attributes->get('data');
-        $workflow = $this->workflows->get($class);
+        $workflowName = null;
+
+        if (!empty($requestContent->name)) {
+            $workflowName = $requestContent->name;
+        }
+
+        $workflow = $this->workflows->get($class, $workflowName);
 
         $workflow->apply($class, $transition);
     }
