@@ -19,9 +19,9 @@
     "doctrine/doctrine-bundle": "^1.10",
     "doctrine/orm": "~2.6.3",
     "ramsey/uuid-doctrine": "^1.5",
-    "symfony/workflow": "4.3.*",
-    "symfony/validator": "4.3.*",
-    "symfony/framework-bundle": "4.3.*"
+    "symfony/workflow": "4.4.*",
+    "symfony/validator": "4.4.*",
+    "symfony/framework-bundle": "4.4.*"
   },
   "autoload": {
     "psr-4": {
