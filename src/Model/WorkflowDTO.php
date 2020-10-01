@@ -12,7 +12,7 @@ class WorkflowDTO
     /**
      * @var string|null
      */
-    protected $name;
+    protected $workflowName;
 
     /**
      * @var string
@@ -22,17 +22,17 @@ class WorkflowDTO
     /**
      * @return string|null
      */
-    public function getName(): ?string
+    public function getWorkflowName(): ?string
     {
-        return $this->name;
+        return $this->workflowName;
     }
 
     /**
-     * @param string|null $name
+     * @param string|null $workflowName
      */
-    public function setName(?string $name): void
+    public function setWorkflowName(?string $workflowName): void
     {
-        $this->name = $name;
+        $this->workflowName = $workflowName;
     }
 
     /**
