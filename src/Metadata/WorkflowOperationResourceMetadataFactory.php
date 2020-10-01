@@ -52,6 +52,7 @@ final class WorkflowOperationResourceMetadataFactory implements ResourceMetadata
             ],
             'output_formats' => $operations['get']['output_formats'],
             'normalization_context' => $operations['get']['normalization_context'],
+            'validation_groups' => ['workflow'],
         ];
 
         $operations['state_get'] = [
@@ -60,7 +61,6 @@ final class WorkflowOperationResourceMetadataFactory implements ResourceMetadata
         ];
 
         return $resourceMetadata
-            ->withItemOperations($operations)
-        ;
+            ->withItemOperations($operations);
     }
 }
