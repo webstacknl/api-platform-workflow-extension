@@ -43,6 +43,7 @@ final class WorkflowOperationResourceMetadataFactory implements ResourceMetadata
 
         $operations['state_apply'] = [
             'method' => 'PATCH',
+            'stateless' => true,
             '_path_suffix' => '/transition',
             'input' => ['class' => WorkflowDTO::class, 'name' => 'WorkflowDTO'],
             'input_formats' => [
@@ -57,6 +58,7 @@ final class WorkflowOperationResourceMetadataFactory implements ResourceMetadata
 
         $operations['state_get'] = [
             'method' => 'GET',
+            'stateless' => true,
             '_path_suffix' => '/state',
         ];
 
