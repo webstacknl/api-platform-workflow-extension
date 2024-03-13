@@ -45,6 +45,8 @@ final readonly class WorkflowTransitionListener
 
         if ($request->attributes->has('previous_data')) {
             $class = $request->attributes->get('previous_data');
+
+            $class = $this->entityManager->find(get_class($class), $class->getId());
         }
 
         $workflowName = null;
