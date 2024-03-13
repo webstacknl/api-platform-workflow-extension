@@ -15,8 +15,6 @@ services:
       - '@Webstack\ApiPlatformWorkflowBundle\PathResolver\OperationPathResolver.inner'
 
   Webstack\ApiPlatformWorkflowBundle\EventListener\WorkflowTransitionListener:
-    # ReadListener in api platform is 4
-    # DeserializeListener in api platform is 2
     tags:
       - { name: kernel.event_listener, event: kernel.request, priority: 1 }
 

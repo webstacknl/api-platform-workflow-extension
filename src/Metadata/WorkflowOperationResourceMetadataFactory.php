@@ -8,29 +8,14 @@ use ApiPlatform\Core\Metadata\Resource\Factory\ResourceMetadataFactoryInterface;
 use ApiPlatform\Core\Metadata\Resource\ResourceMetadata;
 use Webstack\ApiPlatformWorkflowBundle\Model\WorkflowDTO;
 
-/**
- * Class WorkflowOperationResourceMetadataFactory
- */
-final class WorkflowOperationResourceMetadataFactory implements ResourceMetadataFactoryInterface
+final readonly class WorkflowOperationResourceMetadataFactory implements ResourceMetadataFactoryInterface
 {
-    private $supportsWorkflow;
-    private $decorated;
-
-    /**
-     * WorkflowOperationResourceMetadataFactory constructor.
-     *
-     * @param array $supportsWorkflow
-     * @param ResourceMetadataFactoryInterface $decorated
-     */
-    public function __construct(array $supportsWorkflow = [], ResourceMetadataFactoryInterface $decorated)
-    {
-        $this->supportsWorkflow = $supportsWorkflow;
-        $this->decorated = $decorated;
+    public function __construct(
+        private array $supportsWorkflow,
+        private ResourceMetadataFactoryInterface $decorated,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function create(string $resourceClass): ResourceMetadata
     {
         $resourceMetadata = $this->decorated->create($resourceClass);
@@ -40,6 +25,10 @@ final class WorkflowOperationResourceMetadataFactory implements ResourceMetadata
         }
 
         $operations = $resourceMetadata->getItemOperations();
+
+        if (!$operations || !array_key_exists('get', $operations)) {
+            return $resourceMetadata;
+        }
 
         $operations['state_apply'] = [
             'method' => 'PATCH',

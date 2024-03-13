@@ -5,29 +5,22 @@ declare(strict_types=1);
 namespace Webstack\ApiPlatformWorkflowBundle\EventListener;
 
 use ApiPlatform\Core\Util\RequestAttributesExtractor;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Workflow\Registry;
 
-final class WorkflowTransitionListener
+final readonly class WorkflowTransitionListener
 {
-    /**
-     * @var Registry
-     */
-    private $workflows;
-
-    /**
-     * WorkflowTransitionListener constructor.
-     * @param Registry $workflows
-     */
-    public function __construct(Registry $workflows)
-    {
-        $this->workflows = $workflows;
+    public function __construct(
+        private Registry $workflows,
+        private EntityManagerInterface $entityManager,
+    ) {
     }
 
     /**
-     * @param RequestEvent $event
+     * @throws \JsonException
      */
     public function onKernelRequest(RequestEvent $event): void
     {
@@ -41,6 +34,7 @@ final class WorkflowTransitionListener
             return;
         }
 
+        /** @var object $requestContent */
         $requestContent = json_decode($request->getContent(), false, 512, JSON_THROW_ON_ERROR);
 
         if (!isset($requestContent->transition) || !($transition = $requestContent->transition)) {
@@ -48,14 +42,21 @@ final class WorkflowTransitionListener
         }
 
         $class = $request->attributes->get('data');
+
+        if ($request->attributes->has('previous_data')) {
+            $class = $request->attributes->get('previous_data');
+        }
+
         $workflowName = null;
 
         if (!empty($requestContent->workflowName)) {
             $workflowName = $requestContent->workflowName;
         }
 
+        /** @var object $class */
         $workflow = $this->workflows->get($class, $workflowName);
-
         $workflow->apply($class, $transition);
+
+        $this->entityManager->flush();
     }
 }

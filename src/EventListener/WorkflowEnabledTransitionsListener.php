@@ -11,34 +11,15 @@ use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Workflow\Registry;
 
-final class WorkflowEnabledTransitionsListener
+final readonly class WorkflowEnabledTransitionsListener
 {
-    /**
-     * @var Registry
-     */
-    private $workflows;
-
-    /**
-     * @var SerializerInterface
-     */
-    private $serializer;
-
-    /**
-     * WorkflowEnabledTransitionsListener constructor.
-     *
-     * @param SerializerInterface $serializer
-     * @param Registry $workflows
-     */
-    public function __construct(SerializerInterface $serializer, Registry $workflows)
-    {
-        $this->workflows = $workflows;
-        $this->serializer = $serializer;
+    public function __construct(
+        private SerializerInterface $serializer,
+        private Registry $workflows,
+    ) {
     }
 
-    /**
-     * @param ViewEvent $event
-     */
-    public function onKernelView(ViewEvent $event)
+    public function onKernelView(ViewEvent $event): void
     {
         $request = $event->getRequest();
 
@@ -51,6 +32,12 @@ final class WorkflowEnabledTransitionsListener
         }
 
         $class = $request->attributes->get('data');
+
+        if ($request->attributes->has('previous_data')) {
+            $class = $request->attributes->get('previous_data');
+        }
+
+        /** @var object $class */
         $workflows = $this->workflows->all($class);
 
         $output = [];
@@ -61,7 +48,6 @@ final class WorkflowEnabledTransitionsListener
             $output[$workflowName] = $this->workflows->get($class, $workflowName)->getEnabledTransitions($class);
         }
 
-        $event->setResponse(new Response($this->serializer->serialize($output,
-            'json')));
+        $event->setResponse(new Response($this->serializer->serialize($output, 'json')));
     }
 }
