@@ -15,7 +15,7 @@
   "prefer-stable": true,
   "require": {
     "php": ">=8.2",
-    "api-platform/core": "^2.7",
+    "api-platform/core": "^4.1",
     "doctrine/orm": "^2.7",
     "symfony/config": "^6.4",
     "symfony/dependency-injection": "^6.4",
