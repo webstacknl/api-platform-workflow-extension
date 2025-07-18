@@ -10,7 +10,7 @@ use Webstack\ApiPlatformWorkflowBundle\DependencyInjection\Compiler\WorkflowPass
 
 class WebstackApiPlatformWorkflowBundle extends Bundle
 {
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         parent::build($container);
 

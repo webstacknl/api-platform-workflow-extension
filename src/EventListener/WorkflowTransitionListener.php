@@ -11,11 +11,11 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Workflow\Registry;
 
-final readonly class WorkflowTransitionListener
+final class WorkflowTransitionListener
 {
     public function __construct(
-        private Registry $workflows,
-        private EntityManagerInterface $entityManager,
+        private readonly Registry $workflows,
+        private readonly EntityManagerInterface $entityManager,
     ) {
     }
 
@@ -46,6 +46,7 @@ final readonly class WorkflowTransitionListener
         if ($request->attributes->has('previous_data')) {
             $class = $request->attributes->get('previous_data');
 
+            // @phpstan-ignore-next-line
             $class = $this->entityManager->find(get_class($class), $class->getId());
         }
 

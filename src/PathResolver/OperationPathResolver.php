@@ -6,10 +6,10 @@ namespace Webstack\ApiPlatformWorkflowBundle\PathResolver;
 
 use ApiPlatform\PathResolver\OperationPathResolverInterface;
 
-final readonly class OperationPathResolver implements OperationPathResolverInterface
+final class OperationPathResolver implements OperationPathResolverInterface
 {
     public function __construct(
-        private OperationPathResolverInterface $decorated
+        private readonly OperationPathResolverInterface $decorated,
     ) {
     }
 

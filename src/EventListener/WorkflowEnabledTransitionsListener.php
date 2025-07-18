@@ -11,11 +11,11 @@ use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Workflow\Registry;
 
-final readonly class WorkflowEnabledTransitionsListener
+final class WorkflowEnabledTransitionsListener
 {
     public function __construct(
-        private SerializerInterface $serializer,
-        private Registry $workflows,
+        private readonly SerializerInterface $serializer,
+        private readonly Registry $workflows,
     ) {
     }
 

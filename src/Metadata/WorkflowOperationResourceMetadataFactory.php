@@ -8,11 +8,11 @@ use ApiPlatform\Core\Metadata\Resource\Factory\ResourceMetadataFactoryInterface;
 use ApiPlatform\Core\Metadata\Resource\ResourceMetadata;
 use Webstack\ApiPlatformWorkflowBundle\Model\WorkflowDTO;
 
-final readonly class WorkflowOperationResourceMetadataFactory implements ResourceMetadataFactoryInterface
+final class WorkflowOperationResourceMetadataFactory implements ResourceMetadataFactoryInterface
 {
     public function __construct(
-        private array $supportsWorkflow,
-        private ResourceMetadataFactoryInterface $decorated,
+        private readonly array $supportsWorkflow,
+        private readonly ResourceMetadataFactoryInterface $decorated,
     ) {
     }
 
